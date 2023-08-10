@@ -1,0 +1,37 @@
+.sidebar_icon > svg {
+  width: 20px;
+  height: 20px;
+  stroke: #000;
+}
+.sidebar_active_icon > svg {
+  stroke: #a14f28;
+}
+.sidebar_menu {
+  color: #000;
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.menuList_Active {
+  background-color: #a14f2840 !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+.menuList {
+  background-color: transparent;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+.menuList:hover {
+  background-color: #a14f2840 !important;
+}
+.menuList:hover .sidebar_menu {
+  color: #a14f28;
+}
+.menuList:hover .sidebar_icon > svg {
+  stroke: #a14f28;
+}
+
+.menu_active {
+  color: #a14f28;
+}

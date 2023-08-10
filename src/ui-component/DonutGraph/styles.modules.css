@@ -1,0 +1,43 @@
+.chartdiv {
+  width: 180px;
+  height: 180px;
+}
+.chartdiv canvas:last-child {
+  display: none;
+}
+.chartTitle {
+  padding-left: 15px;
+  font-weight: 600;
+  font-size: 14px;
+  padding-top: 5px;
+}
+.chartMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #fff;
+  width: 100%;
+  padding: 5px 5px 5px 0px;
+  border-radius: 12px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+.chartMain p {
+  margin: 0;
+}
+.legendsMain {
+  text-align: center;
+}
+.legend {
+  padding-bottom: 5px;
+}
+.legendValue {
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 10px;
+}
+.legendTitle {
+  color: #1c1b1b;
+  font-weight: 600;
+  font-size: 10px;
+}
