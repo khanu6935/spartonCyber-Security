@@ -8,6 +8,7 @@ import Loadable from 'ui-component/Loadable';
 // const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
 const Customers = Loadable(lazy(() => import('views/Customers/Customers')));
+const Deveces = Loadable(lazy(() => import('views/devices/Devices')));
 
 // utilities routing
 // const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
@@ -97,6 +98,10 @@ const MainRoutes = {
     {
       path: 'sample-page',
       element: <SamplePage />
+    },
+    {
+      path: 'devices',
+      element: <Deveces />
     }
   ]
 };

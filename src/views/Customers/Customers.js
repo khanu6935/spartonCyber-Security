@@ -25,11 +25,6 @@ export default function Customers() {
   const [, setActiveItem] = useOutletContext();
   const [customers, setCustomers] = useState([]);
 
-  const credentials = {
-    username: 'dev',
-    password: '@pajeiohj3'
-  };
-
   useEffect(() => {
     const login = async () => {
       try {
@@ -54,7 +49,6 @@ export default function Customers() {
 
       const headers = {
         Authorization: `Bearer ${token}`
-        // Accept: 'application/json'
       };
       const data = await axios.get('https://scs-soc-api.spartancyber.com/get_customers', { headers });
       const res = data.data;
