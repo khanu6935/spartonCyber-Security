@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useEffect } from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import { useOutletContext } from 'react-router';
@@ -7,6 +8,8 @@ import { IconDeviceLaptop } from '@tabler/icons';
 import DonutGraph from 'ui-component/DonutGraph/DonutGraph';
 import styles from './styles.module.css';
 import FilterBar from 'ui-component/FilterBar/FilterBar';
+import { useState } from 'react';
+import axios from 'axios';
 
 const data1 = [
   { value: 62.96, category: 'One', fill: am5.color('#f00'), color: '#f00' },
@@ -20,94 +23,150 @@ const data2 = [
 ];
 export default function Customers() {
   const [, setActiveItem] = useOutletContext();
+  const [customers, setCustomers] = useState([]);
+
+  const credentials = {
+    username: 'dev',
+    password: '@pajeiohj3'
+  };
 
   useEffect(() => {
+    const login = async () => {
+      try {
+        const formData = new FormData();
+        formData.append('username', 'dev');
+        formData.append('password', '@pajeiohj3');
+        const response = await axios.post('https://scs-soc-api.spartancyber.com/token', formData);
+        const { access_token } = response.data;
+        localStorage.setItem('token', access_token);
+      } catch (error) {
+        console.error('Login failed:', error);
+      }
+    };
+
+    login();
+  }, []);
+
+  const fetchCustomers = async () => {
+    try {
+      const parsetoken = localStorage.getItem('token');
+      const token = parsetoken;
+
+      const headers = {
+        Authorization: `Bearer ${token}`
+        // Accept: 'application/json'
+      };
+      const data = await axios.get('https://scs-soc-api.spartancyber.com/get_customers', { headers });
+      const res = data.data;
+      setCustomers(res);
+    } catch (error) {
+      console.log('error>>', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCustomers();
     setActiveItem('customers');
   }, []);
 
-  const data = [
-    {
-      name: {
-        firstName: 'John',
-        lastName: 'Doe'
-      },
-      address: '261 Erdman Ford',
-      city: 'East Daphne',
-      state: 'Kentucky'
-    },
-    {
-      name: {
-        firstName: 'Jane',
-        lastName: 'Doe'
-      },
-      address: '769 Dominic Grove',
-      city: 'Columbus',
-      state: 'Ohio'
-    },
-    {
-      name: {
-        firstName: 'Joe',
-        lastName: 'Doe'
-      },
-      address: '566 Brakus Inlet',
-      city: 'South Linda',
-      state: 'West Virginia'
-    },
-    {
-      name: {
-        firstName: 'Joe',
-        lastName: 'Doe'
-      },
-      address: '566 Brakus Inlet',
-      city: 'South Linda',
-      state: 'West Virginia'
-    },
-    {
-      name: {
-        firstName: 'Kevin',
-        lastName: 'Vandy'
-      },
-      address: '722 Emie Stream',
-      city: 'Lincoln',
-      state: 'Nebraska'
-    },
-    {
-      name: {
-        firstName: 'Joshua',
-        lastName: 'Rolluffs'
-      },
-      address: '32188 Larkin Turnpike',
-      city: 'Charleston',
-      state: 'South Carolina'
-    }
-  ];
+  console.log('customers>>>', customers);
+
+  //   {
+  //     name: {
+  //       firstName: 'John',
+  //       lastName: 'Doe'
+  //     },
+  //     address: '261 Erdman Ford',
+  //     city: 'East Daphne',
+  //     state: 'Kentucky'
+  //   },
+  //   {
+  //     name: {
+  //       firstName: 'Jane',
+  //       lastName: 'Doe'
+  //     },
+  //     address: '769 Dominic Grove',
+  //     city: 'Columbus',
+  //     state: 'Ohio'
+  //   },
+  //   {
+  //     name: {
+  //       firstName: 'Joe',
+  //       lastName: 'Doe'
+  //     },
+  //     address: '566 Brakus Inlet',
+  //     city: 'South Linda',
+  //     state: 'West Virginia'
+  //   },
+  //   {
+  //     name: {
+  //       firstName: 'Joe',
+  //       lastName: 'Doe'
+  //     },
+  //     address: '566 Brakus Inlet',
+  //     city: 'South Linda',
+  //     state: 'West Virginia'
+  //   },
+  //   {
+  //     name: {
+  //       firstName: 'Kevin',
+  //       lastName: 'Vandy'
+  //     },
+  //     address: '722 Emie Stream',
+  //     city: 'Lincoln',
+  //     state: 'Nebraska'
+  //   },
+  //   {
+  //     name: {
+  //       firstName: 'Joshua',
+  //       lastName: 'Rolluffs'
+  //     },
+  //     address: '32188 Larkin Turnpike',
+  //     city: 'Charleston',
+  //     state: 'South Carolina'
+  //   }
+  // ];
   const columns = [
     {
-      accessorKey: 'name.firstName', //access nested data with dot notation
-      header: 'First Name',
+      accessorKey: 'namefirstName', //access nested data with dot notation
+      header: 'Name',
       size: 150
     },
     {
-      accessorKey: 'name.lastName',
-      header: 'Last Name',
+      accessorKey: 'Deviceplatform',
+      header: 'Device PlatForm',
       size: 150
     },
     {
-      accessorKey: 'address', //normal accessorKey
-      header: 'Address',
+      accessorKey: 'totalDevicenotcomplaint', //normal accessorKey
+      header: 'Total Device not complaint',
       size: 200
     },
     {
-      accessorKey: 'city',
-      header: 'City',
+      accessorKey: 'TotalUser',
+      header: 'Total User',
       size: 150
     },
     {
-      accessorKey: 'state',
-      header: 'State',
+      accessorKey: 'NotCpmlaintUsers',
+      header: 'Not Cpmlaint Users',
+      size: 150
+    },
+    {
+      accessorKey: 'aliases',
+      header: 'Aliases',
       size: 150
     }
   ];
+
+  const apiResponse = customers.map((item) => ({
+    namefirstName: item.name,
+    Deviceplatform: item.total_devices,
+    totalDevicenotcomplaint: item.total_devices_not_compliant,
+    TotalUser: item.total_users,
+    NotCpmlaintUsers: item.total_users_not_compliant,
+    aliases: item.aliases
+  }));
 
   return (
     <div>
@@ -199,7 +258,7 @@ export default function Customers() {
         <Grid item xs={12}>
           <MaterialReactTable
             columns={columns}
-            data={data}
+            data={apiResponse}
             enableColumnOrdering
             enableGrouping
             enablePinning
