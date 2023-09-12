@@ -98,8 +98,6 @@ export default function Devices() {
 
   const modifiedResponse = data.map(removeDotsFromKeys);
 
-  console.log('modifiedResponse>>>>', modifiedResponse);
-
   const apiResponse = modifiedResponse.map((item) => ({
     device_platform: item.customers_device_platforms,
     firstName: item.customers_name,
